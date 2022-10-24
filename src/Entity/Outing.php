@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OutingRepository::class)]
 #[ApiResource]
@@ -19,18 +20,33 @@ class Outing
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner un nom'
+    )]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner une date-heure de début.'
+    )]
     private ?\DateTimeInterface $dateHourStart = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner une durée'
+    )]
     private ?\DateTimeInterface $duration = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner une date limite pour s\'inscrire.'
+    )]
     private ?\DateTimeInterface $dateLimitRegistration = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner un nombre maximum d\'inscrits'
+    )]
     private ?int $nbRegistrationMax = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -38,7 +54,7 @@ class Outing
 
     #[ORM\ManyToOne(inversedBy: 'outingsOrganizer')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $Organizer = null;
+    private ?User $organizer = null;
 
     #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'outings')]
     private Collection $registereds;
@@ -139,12 +155,12 @@ class Outing
 
     public function getOrganizer(): ?User
     {
-        return $this->Organizer;
+        return $this->organizer;
     }
 
-    public function setOrganizer(?User $Organizer): self
+    public function setOrganizer(?User $organizer): self
     {
-        $this->Organizer = $Organizer;
+        $this->organizer = $organizer;
 
         return $this;
     }

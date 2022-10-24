@@ -7,6 +7,8 @@ use App\Repository\CampusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CampusRepository::class)]
 #[ApiResource]
@@ -18,18 +20,21 @@ class Campus
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner un nom.'
+    )]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: user::class)]
     private Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Outing::class)]
-    private Collection $CampusOuting;
+    private Collection $campusOuting;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->CampusOuting = new ArrayCollection();
+        $this->campusOuting = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,8 +94,8 @@ class Campus
 
     public function addCampusOuting(Outing $campusOuting): self
     {
-        if (!$this->CampusOuting->contains($campusOuting)) {
-            $this->CampusOuting->add($campusOuting);
+        if (!$this->campusOuting->contains($campusOuting)) {
+            $this->campusOuting->add($campusOuting);
             $campusOuting->setCampus($this);
         }
 
@@ -99,7 +104,7 @@ class Campus
 
     public function removeCampusOuting(Outing $campusOuting): self
     {
-        if ($this->CampusOuting->removeElement($campusOuting)) {
+        if ($this->campusOuting->removeElement($campusOuting)) {
             // set the owning side to null (unless already changed)
             if ($campusOuting->getCampus() === $this) {
                 $campusOuting->setCampus(null);

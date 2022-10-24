@@ -7,6 +7,8 @@ use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CityRepository::class)]
 #[ApiResource]
@@ -18,9 +20,18 @@ class City
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner un nom."
+    )]
     private ?string $name = null;
 
-    #[ORM\Column(length: 5)]
+    #[ORM\Column()]
+    #[Assert\NotBlank(
+        message:"Veuillez renseigner un code postal."
+    )]
+    #[Assert\Regex('[0-9]{5}',
+        message:"Veuillez renseigner un code postal valide."
+    )]
     private ?string $cp = null;
 
     #[ORM\OneToMany(mappedBy: 'city', targetEntity: Place::class)]
