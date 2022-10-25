@@ -31,13 +31,13 @@ class Outing
     )]
     private ?\DateTimeInterface $dateHourStart = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column()]
     #[Assert\NotBlank(
         message:'Veuillez renseigner une durée'
     )]
-    private ?\DateTimeInterface $duration = null;
+    private ?int $duration = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotBlank(
         message:'Veuillez renseigner une date limite pour s\'inscrire.'
     )]
@@ -105,12 +105,12 @@ class Outing
         return $this;
     }
 
-    public function getDuration(): ?\DateTimeInterface
+    public function getDuration(): ?int
     {
         return $this->duration;
     }
 
-    public function setDuration(\DateTimeInterface $duration): self
+    public function setDuration(int $duration): self
     {
         $this->duration = $duration;
 

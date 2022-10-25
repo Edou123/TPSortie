@@ -29,7 +29,9 @@ class City
     #[Assert\NotBlank(
         message:"Veuillez renseigner un code postal."
     )]
-    #[Assert\Regex('[0-9]{5}',
+    #[Assert\Regex(
+        pattern:'[0-9]{5}', 
+        match: false, 
         message:"Veuillez renseigner un code postal valide."
     )]
     private ?string $cp = null;

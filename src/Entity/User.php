@@ -41,6 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message:'Veuillez renseigner un mot de passe.'
     )]
     private ?string $password = null;
+    
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(
+        message:'Veuillez renseigner un email.'
+    )]
+    private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
@@ -58,12 +64,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(
         message:'Veuillez renseigner un n° de téléphone.'
     )]
-    #[Assert\Regex('^
-        (?:(?:\+|00)33|0)     
-        \s*[1-9]             
-        (?:[\s.-]*\d{2}){4}   
-    $')]
-    private ?int $phone = null;
+    #[Assert\Regex(
+        pattern: '^
+            (?:(?:\+|00)33|0)     
+            \s*[1-9]             
+            (?:[\s.-]*\d{2}){4}   
+        $',
+    match: false, 
+    message:"Veuillez renseigner un code postal valide."
+    )]
+    private ?string $phone = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(
@@ -87,6 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
+    
     public function __construct()
     {
         $this->outingsOrganizer = new ArrayCollection();
@@ -126,9 +137,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
 
+        if($this->administrator === true){
+            $roles[] = 'ROLE_ADMINISTRATEUR';
+        } else {
+            $roles[] = 'ROLE_USER';
+        }
         return array_unique($roles);
     }
 
@@ -288,6 +302,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCampus(?Campus $campus): self
     {
         $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }
