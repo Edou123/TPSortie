@@ -25,7 +25,7 @@ class Campus
     )]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: user::class)]
+    #[ORM\OneToMany(mappedBy: 'campus', targetEntity: User::class)]
     private Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Outing::class)]
@@ -55,14 +55,14 @@ class Campus
     }
 
     /**
-     * @return Collection<int, user>
+     * @return Collection<int, User>
      */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
-    public function addUser(user $user): self
+    public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
@@ -72,7 +72,7 @@ class Campus
         return $this;
     }
 
-    public function removeUser(user $user): self
+    public function removeUser(User $user): self
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
