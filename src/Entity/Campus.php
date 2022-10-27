@@ -29,7 +29,7 @@ class Campus
     private Collection $users;
 
     #[ORM\OneToMany(mappedBy: 'campus', targetEntity: Outing::class)]
-    private Collection $campusOuting;
+    private Collection $CampusOuting;
 
     public function __construct()
     {
