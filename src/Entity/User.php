@@ -2,8 +2,16 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Controller\API\GetUserUsername;
+use App\Controller\UserByUsernameController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,18 +22,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource(
-    // new Post()
-
-)]
+#[ApiResource(operations:[
+    new Get(),
+    new Put(),
+    new Delete(),
+    new GetCollection(),
+    new Post(),
+    new Patch(),
+    new Get(
+        uriTemplate: '/user/{username}',
+        controller: UserByUsernameController::class,
+        name: 'user_by_username',
+    )
+])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
+    #[ApiProperty()]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[ApiProperty()]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]
@@ -91,7 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?bool $actif = null;
 
-    #[ORM\OneToMany(mappedBy: 'Organizer', targetEntity: Outing::class)]
+    #[ORM\OneToMany(mappedBy: 'organizer', targetEntity: Outing::class)]
     private Collection $outingsOrganizer;
 
     #[ORM\ManyToMany(targetEntity: Outing::class, mappedBy: 'registereds')]
