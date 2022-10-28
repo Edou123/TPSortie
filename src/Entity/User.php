@@ -88,7 +88,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message:'Veuillez renseigner un n° de téléphone.'
     )]
     #[Assert\Regex(
-        pattern: "/^(0|\+33 )[1-9]([-. ]?[0-9]{2} ){3}([-. ]?[0-9]{2})$/",
+        pattern: "/^(?:(?:\+|00)33|0)     
+        \s*[1-9]             
+        (?:[\s.-]*\d{2}){4}   
+        $/",
         match: false, 
         message:"Veuillez renseigner un code postal valide."
     )]
