@@ -1,5 +1,5 @@
 <?php
-namespace App\EventListener;
+namespace App\Listeners;
 
 use App\Repository\UserRepository;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
@@ -7,7 +7,7 @@ use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[AsEventListener(
-    event: 'lexik_jwt_authentication.handler.authentication_success',
+    event: 'lexik_jwt_authentication.on_authentication_success',
     method: 'onAuthenticationSuccessResponse',
     priority: 10)]
 class AuthenticationSuccessListener
