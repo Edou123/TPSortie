@@ -30,8 +30,8 @@ class City
         message:"Veuillez renseigner un code postal."
     )]
     #[Assert\Regex(
-        pattern:'[0-9]{5}', 
-        match: false, 
+        pattern:"/\d{2}\s?\d{3}/", 
+        match: true, 
         message:"Veuillez renseigner un code postal valide."
     )]
     private ?string $cp = null;

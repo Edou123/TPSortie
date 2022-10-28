@@ -88,12 +88,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message:'Veuillez renseigner un n° de téléphone.'
     )]
     #[Assert\Regex(
-        pattern: "/^(?:(?:\+|00)33|?0)     
-        \s*[1-9]             
-        (?:[\s.-]*\d{2}){4}   
-        $/",
-        match: false, 
-        message:"Veuillez renseigner un code postal valide."
+        pattern: "/^((?:\+33\s|0)(\(0\))?[1-9](?:\s?\d{2}){4})$/",
+        match: true, 
+        message:"Veuillez renseigner un n° de téléphone valide."
     )]
     private ?string $phone = null;
 
@@ -104,9 +101,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $administrator = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(
-        message:'Veuillez renseigner l\'utilisateur est actif ou non.'
-    )]
+    // #[Assert\NotBlank(
+    //     message:'Veuillez renseigner l\'utilisateur est actif ou non.'
+    // )]
     private ?bool $actif = null;
 
     #[ORM\OneToMany(mappedBy: 'organizer', targetEntity: Outing::class)]
