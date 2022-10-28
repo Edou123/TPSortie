@@ -88,20 +88,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message:'Veuillez renseigner un n° de téléphone.'
     )]
     #[Assert\Regex(
-        pattern: '^
-            (?:(?:\+|00)33|0)     
-            \s*[1-9]             
-            (?:[\s.-]*\d{2}){4}   
-        $',
-    match: false, 
-    message:"Veuillez renseigner un code postal valide."
+        pattern: "/^(0|\+33 )[1-9]([-. ]?[0-9]{2} ){3}([-. ]?[0-9]{2})$/",
+        match: false, 
+        message:"Veuillez renseigner un code postal valide."
     )]
     private ?string $phone = null;
 
     #[ORM\Column]
-    #[Assert\NotBlank(
-        message:'Veuillez renseigner si l\utilisateur est un administrateur.'
-    )]
+    // #[Assert\NotBlank(
+    //     message:'Veuillez renseigner si l\utilisateur est un administrateur.'
+    // )]
     private ?bool $administrator = null;
 
     #[ORM\Column]
