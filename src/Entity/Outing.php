@@ -56,7 +56,7 @@ class Outing
     #[ORM\JoinColumn(nullable: false)]
     private ?User $organizer = null;
 
-    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'outings')]
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'outings')]
     private Collection $registereds;
 
     #[ORM\ManyToOne(inversedBy: 'CampusOuting')]
