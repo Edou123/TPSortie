@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Serializer\Serializer;
 
 #[AsController]
-class UserByUsernameController extends AbstractController
+class UserByPseudoController extends AbstractController
 {
     private UserRepository $repo;
 
@@ -17,9 +17,9 @@ class UserByUsernameController extends AbstractController
         $this->repo = $repo;
     }
 
-    public function __invoke(string $username)
+    public function __invoke(string $pseudo)
     {
-        $user = $this->repo->loadUserByEmail($username);
+        $user = $this->repo->loadUserByPseudo($pseudo);
         $response = new JsonResponse([
             'user' => $user
         ]);

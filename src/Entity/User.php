@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -11,6 +10,7 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\API\GetUserUsername;
+use App\Controller\UserByPseudoController;
 use App\Controller\UserByUsernameController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,33 +18,39 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(operations:[
-    new Get(),
+    new Get(normalizationContext:['groups'=>['user:get']]),
     new Put(),
     new Delete(),
     new GetCollection(),
     new Post(),
     new Patch(),
-    new Get(
-        uriTemplate: '/user/{username}',
-        controller: UserByUsernameController::class,
-        name: 'user_by_username',
-    )
+    // new Get(
+    //     uriTemplate: '/user/test/{username}',
+    //     controller: UserByUsernameController::class,
+    //     name: 'user_by_username',
+    // ),
+    // new Get(
+    //     uriTemplate: '/user/{pseudo}',
+    //     controller: UserByPseudoController::class,
+    //     name: 'user_by_pseudo',
+    // )
 ])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ApiProperty()]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(["user:get"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[ApiProperty()]
+    #[Groups(["user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]
@@ -54,6 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(["user:get"])]
     private array $roles = [];
 
     /**
@@ -66,24 +73,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
     
     #[ORM\Column(length: 255, unique: true)]
+    #[Groups(["user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un nom.'
     )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un prénom.'
     )]
     private ?string $firstname = null;
 
     #[ORM\Column()]
+    #[Groups(["user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un n° de téléphone.'
     )]
@@ -113,6 +124,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $outings;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
+    #[Groups(["user:get"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
