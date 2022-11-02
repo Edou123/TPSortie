@@ -136,6 +136,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $actif = null;
 
     #[ORM\OneToMany(mappedBy: 'organizer', targetEntity: Outing::class)]
+    #[Groups(["user:get"])]
     private Collection $outingsOrganizer;
 
     #[ORM\ManyToMany(targetEntity: Outing::class, mappedBy: 'registereds')]    
