@@ -131,6 +131,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $administrator = null;
 
     #[ORM\Column]
+    #[Groups(["user:get"])]
     // #[Assert\NotBlank(
     //     message:'Veuillez renseigner l\'utilisateur est actif ou non.'
     // )]
