@@ -28,6 +28,24 @@ use Symfony\Component\Validator\Constraints as Assert;
     new Put(),
     new Delete(),
     new GetCollection(),
+    new GetCollection(
+        uriTemplate: 'search/userByPseudo',
+        controller: UserByPseudoController::class,
+        openapiContext:[
+            'summary' => 'Rechercher un utilisateur par son pseudo',
+            'description' => 'Retourne un User si trouvé, null sinon',
+            'parameters' => [
+                [
+                    'type' => 'string',
+                    'in' => 'query',
+                    'required' => true,
+                    'name' => 'pseudo'
+                ],
+            ],
+        ],
+        paginationEnabled: false,
+        name: 'user_by_pseudo'
+    ),
     new Post(),
     new Patch(),
     // new Get(

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Serializer\Serializer;
 
@@ -17,13 +18,16 @@ class UserByPseudoController extends AbstractController
         $this->repo = $repo;
     }
 
-    public function __invoke(string $pseudo)
+    public function __invoke(Request $request)
     {
-        $user = $this->repo->loadUserByPseudo($pseudo);
-        $response = new JsonResponse([
-            'user' => $user
-        ]);
-        return $response;
+        $pseudo = $request->query->get('pseudo', '');
+        return $this->repo->loadUserByPseudo($pseudo);
+
+        // $user = $this->repo->loadUserByPseudo($pseudo);
+        // $response = new JsonResponse([
+        //     'user' => $user
+        // ]);
+        // return $response;
     }
  
 }
