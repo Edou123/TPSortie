@@ -7,6 +7,7 @@ use App\Repository\ConditionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ConditionRepository::class)]
@@ -16,10 +17,12 @@ class Condition
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[Groups(["outing:getcollection"])]   
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["outing:getcollection"])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner un libellé.'
     )]

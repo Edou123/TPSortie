@@ -17,12 +17,12 @@ class Campus
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(["user:get"])]
+    #[Groups(["user:get", "outing:getcollection"])]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["user:get"])]
+    #[Groups(["user:get", "outing:getcollection"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un nom.'
     )]

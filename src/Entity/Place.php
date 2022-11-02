@@ -7,6 +7,7 @@ use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -16,28 +17,33 @@ class Place
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[Groups(["outing:getcollection"])]   
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["outing:getcollection"])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner un nom.'
     )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(["outing:getcollection"])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner une rue.'
     )]
     private ?string $street = null;
 
     #[ORM\Column]
+    #[Groups(["outing:getcollection"])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner une latitude.'
     )]
     private ?float $latitude = null;
 
     #[ORM\Column]
+    #[Groups(["outing:getcollection"])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner une longitude.'
     )]
