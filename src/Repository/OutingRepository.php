@@ -39,6 +39,22 @@ class OutingRepository extends ServiceEntityRepository
         }
     }
 
+
+       /**
+    * @return Outing[] Returns an array of Outing objects
+    */
+   public function checkOuverte(string $val): array
+   {
+       return $this->createQueryBuilder('o')
+           ->select('o')
+           ->join('o.outingCondition', 'c')
+           ->Where('c.libelle = :val')
+           ->setParameter('val', $val)
+           ->getQuery()
+           ->getResult()
+       ;
+
+   }
 //    /**
 //     * @return Outing[] Returns an array of Outing objects
 //     */

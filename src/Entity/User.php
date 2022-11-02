@@ -29,6 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     new Delete(),
     new GetCollection(),
     new GetCollection(
+        normalizationContext:['groups'=>['user:get']],
         uriTemplate: 'search/userByPseudo',
         controller: UserByPseudoController::class,
         openapiContext:[
