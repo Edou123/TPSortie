@@ -43,7 +43,7 @@ class OutingRepository extends ServiceEntityRepository
     /**
     * @return Outing[] Returns an array of Outing objects
     */
-    public function checkDate(string $val): array
+    public function recoverOutingFromCondition(string $val): array
     {
         return $this->createQueryBuilder('o')
             ->select('o')

@@ -15,7 +15,7 @@ class ConditionFixtures extends Fixture implements DependentFixtureInterface
     {
         // $faker = Factory::create('fr_FR');
 
-        $etat = ['Créée', 'Ouverte', 'Clôturée', 'Activité encours', 'passée', 'Annulée'];
+        $etat = ['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'Passée', 'Annulée'];
 
         for ($j = 0; $j < 6; $j++){
             $condition = new Condition();

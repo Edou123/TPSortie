@@ -84,11 +84,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["user:get", "outing:getcollection"])]
+    #[Groups(["user:get","outing:put", "outing:getcollection"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["user:get", "outing:getcollection"])]
+    #[Groups(["user:get", "outing:put", "outing:getcollection"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]
@@ -111,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
     
     #[ORM\Column(length: 255, unique: true)]
-    #[Groups(["user:get", "outing:getcollection"])]
+    #[Groups(["user:get","outing:put", "outing:getcollection"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]

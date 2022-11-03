@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: OutingRepository::class)]
 #[ApiResource(operations:[
     new Get(),
-    new Put(),
+    new Put(normalizationContext:['groups'=>['outing:put']]),
     new Delete(),
     new GetCollection(normalizationContext:['groups'=>['outing:getcollection']]),
     new Post(),
@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Outing
 {
     #[ORM\Id]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
