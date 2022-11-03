@@ -10,8 +10,8 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use App\Controller\API\GetUserUsername;
+use App\Controller\UserByEmailController;
 use App\Controller\UserByPseudoController;
-use App\Controller\UserByUsernameController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -46,6 +46,25 @@ use Symfony\Component\Validator\Constraints as Assert;
         ],
         paginationEnabled: false,
         name: 'user_by_pseudo'
+    ),
+    new GetCollection(
+        normalizationContext:['groups'=>['user:get']],
+        uriTemplate: 'research/userByEmail',
+        controller: UserByEmailController::class,
+        openapiContext:[
+            'summary' => 'Rechercher un utilisateur par son Email',
+            'description' => 'Retourne un User si trouvé, null sinon',
+            'parameters' => [
+                [
+                    'type' => 'string',
+                    'in' => 'query',
+                    'required' => true,
+                    'name' => 'email'
+                ],
+            ],
+        ],
+        paginationEnabled: false,
+        name: 'user_by_email'
     ),
     new Post(),
     new Patch(),

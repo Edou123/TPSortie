@@ -13,7 +13,7 @@ class TestController extends AbstractController
     public function index(OutingRepository $outingRepository): Response
     {
 
-        $outingOuverte = $outingRepository->checkOuverte('Ouverte');
+        $outingOuverte = $outingRepository->checkDate('Créée');
 
         dd($outingOuverte);
 
