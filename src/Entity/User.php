@@ -9,7 +9,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Controller\API\GetUserUsername;
+use App\Controller\NewUserController;
 use App\Controller\UserByEmailController;
 use App\Controller\UserByPseudoController;
 use App\Repository\UserRepository;
@@ -66,7 +66,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         paginationEnabled: false,
         name: 'user_by_email'
     ),
-    new Post(),
+    new Post(  
+        uriTemplate: '/user',
+        controller: NewUserController::class,
+        name: 'new_user',
+    ),
     new Patch(),
     // new Get(
     //     uriTemplate: '/user/test/{username}',
