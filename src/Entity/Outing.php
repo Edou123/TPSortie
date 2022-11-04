@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OutingRepository::class)]
 #[ApiResource(operations:[
-    new Get(),
+    new Get(normalizationContext:['groups'=>['outing:getcollection']]),
     new Put(normalizationContext:['groups'=>['outing:put']]),
     new Delete(),
     new GetCollection(normalizationContext:['groups'=>['outing:getcollection']]),
@@ -35,51 +35,51 @@ class Outing
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner un nom'
     )]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner une date-heure de début.'
     )]
     private ?\DateTimeInterface $dateHourStart = null;
 
     #[ORM\Column()]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner une durée'
     )]
     private ?int $duration = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner une date limite pour s\'inscrire.'
     )]
     private ?\DateTimeInterface $dateLimitRegistration = null;
 
     #[ORM\Column]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     #[Assert\NotBlank(
         message:'Veuillez renseigner un nombre maximum d\'inscrits'
     )]
     private ?int $nbRegistrationMax = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["outing:getcollection", 'user:get'])]   
+    #[Groups(["outing:put", "outing:getcollection", 'user:get'])]   
     private ?string $infosOuting = null;
 
     #[ORM\ManyToOne(inversedBy: 'outingsOrganizer', fetch: 'EAGER')]
-    #[Groups(["outing:getcollection"])]   
+    #[Groups(["outing:put", "outing:getcollection"])]   
     #[ORM\JoinColumn(nullable: false)]
     private ?User $organizer = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'outings', fetch: 'EAGER')]
-    #[Groups(["outing:getcollection"])]   
+    #[Groups(["outing:put", "outing:getcollection"])]   
     private Collection $registereds;
 
     #[ORM\ManyToOne(inversedBy: 'CampusOuting', fetch: 'EAGER')]
