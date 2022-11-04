@@ -9,16 +9,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestController extends AbstractController
 {
-    #[Route('/', name: 'app_test')]
-    public function index(OutingRepository $outingRepository): Response
-    {
+    // #[Route('/', name: 'app_test')]
+    // public function index(OutingRepository $outingRepository): Response
+    // {
 
-        $outingOuverte = $outingRepository->checkDate('Créée');
+        // $outingOuverte = $outingRepository->checkDate('Créée');
 
-        dd($outingOuverte);
+        // dd($outingOuverte);
 
-        return $this->render('test/index.html.twig', [
-            'controller_name' => 'TestController',
-        ]);
-    }
+        // return $this->render('test/index.html.twig', [
+        //     'controller_name' => 'TestController',
+        // ]);
+    // }
 }
