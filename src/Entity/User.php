@@ -67,6 +67,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         name: 'user_by_email'
     ),
     new Post(  
+        normalizationContext:['groups'=>['user:post']],
         uriTemplate: '/user',
         controller: NewUserController::class,
         name: 'new_user',
@@ -88,11 +89,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["user:get","outing:put", "outing:getcollection"])]
+    #[Groups(["user:get", "user:post", "outing:put", "outing:getcollection"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["user:get", "outing:put", "outing:getcollection"])]
+    #[Groups(["user:get", "user:post", "outing:put", "outing:getcollection"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]
@@ -102,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(["user:get"])]
+    #[Groups([ "user:post", "user:get"])]
     private array $roles = [];
 
     /**
@@ -115,28 +116,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
     
     #[ORM\Column(length: 255, unique: true)]
-    #[Groups(["user:get","outing:put", "outing:getcollection"])]
+    #[Groups(["user:get", "user:post", "outing:put", "outing:getcollection"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un email.'
     )]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["user:get"])]
+    #[Groups([ "user:post", "user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un nom.'
     )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["user:get"])]
+    #[Groups([ "user:post", "user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un prénom.'
     )]
     private ?string $firstname = null;
 
     #[ORM\Column()]
-    #[Groups(["user:get"])]
+    #[Groups([ "user:post", "user:get"])]
     #[Assert\NotBlank(
         message:'Veuillez renseigner un n° de téléphone.'
     )]
@@ -148,6 +149,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $phone = null;
 
     #[ORM\Column]
+    #[Groups([ "user:post"])]
     // #[Assert\NotBlank(
     //     message:'Veuillez renseigner si l\utilisateur est un administrateur.'
     // )]

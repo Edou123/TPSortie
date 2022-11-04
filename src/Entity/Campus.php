@@ -17,7 +17,7 @@ class Campus
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[Groups(["user:get", "outing:getcollection"])]
+    #[Groups(["user:get", "user:post", "outing:getcollection"])]
     #[ORM\Column]
     private ?int $id = null;
 
