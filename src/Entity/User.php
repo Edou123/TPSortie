@@ -156,7 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $administrator = null;
 
     #[ORM\Column]
-    #[Groups(["user:get"])]
+    #[Groups(["user:get", "user:post"])]
     // #[Assert\NotBlank(
     //     message:'Veuillez renseigner l\'utilisateur est actif ou non.'
     // )]
@@ -170,7 +170,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $outings;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    #[Groups(["user:get"])]
+    #[Groups(["user:get", "user:post"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
